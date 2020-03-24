@@ -5,44 +5,6 @@
 #include <fstream>
 #include<string.h>
 using namespace std;
-int hangshu;
-bool operator<(const pair<double, double>& lhs, const pair<double, double>& rhs)
-{
-	if (fabs(lhs.first - rhs.first) < 1e-10) {
-		if (fabs(lhs.second - rhs.second) < 1e10) {
-			return false;
-		}
-		else if (lhs.second - rhs.second == 0) {
-			return false;
-		}
-		else if (lhs.second < rhs.second) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	else if (lhs.first - rhs.first == 0) {
-		if (fabs(lhs.second - rhs.second) < 1e10) {
-			return false;
-		}
-		else if (lhs.second - rhs.second == 0) {
-			return false;
-		}
-		else if (lhs.second < rhs.second) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	else if (lhs.first - rhs.first < 0) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
 struct OperatorException : public exception
 {
 	const char* what() const throw ()
@@ -92,20 +54,6 @@ struct CirclesameException : public exception
 		return "Circlesame Exception";
 	}
 };
-struct LineillegalException : public exception
-{
-	const char* what() const throw ()
-	{
-		return "Lineillegal Exception";
-	}
-};
-struct CircleillegalException : public exception
-{
-	const char* what() const throw ()
-	{
-		return "Circleillegal Exception";
-	}
-};
 
 char temp;
 void ifex(double a) {
@@ -119,11 +67,7 @@ double getnum(ifstream& in) {
 	temp = in.get();
 	//cout << temp << endl;
 	while (isspace(temp)) {
-		if (temp == '\n') {
-			hangshu++;
-		}
 		temp = in.get();
-		
 		//cout << temp << endl;
 	}
 	
@@ -142,9 +86,6 @@ double getnum(ifstream& in) {
 		token = token + temp;
 		temp = in.get();
 		//cout << temp << endl;
-		if (temp == '\n') {
-			hangshu++;
-		}
 		if (!isspace(temp) && !isdigit(temp)&&!in.eof()) {
 			//cout << 1111111111 << endl;
 			throw NumberException();
@@ -162,17 +103,9 @@ class Line
 {
 public:
 	double A, B, C;
-	Line() {
-		A = 0;
-		B = 0;
-		C = 0;
-
-	};
+	Line() {};
 	Line(double x1,double y1,double x2,double y2)
 	{
-		if (x1 == x2 && y1 == y2) {
-			throw(LineillegalException());
-		}
 		A = y2 - y1;
 		B = x1 - x2;
 		C = x2 * y1 - x1 * y2;
@@ -215,9 +148,6 @@ public:
 	double x1, y1, x2, y2;
 	Ray(double x10, double y10, double x20, double y20)
 	{
-		if (x10 == x20 && y10 == y20) {
-			throw(LineillegalException());
-		}
 		A = y20 - y10;
 		B = x10 - x20;
 		C = x20 * y10 - x10 * y20;
@@ -254,9 +184,6 @@ public:
 	double x1, y1, x2, y2;
 	Segment(double x10, double y10, double x20, double y20)
 	{
-		if (x10 == x20 && y10 == y20) {
-			throw(LineillegalException());
-		}
 		A = y20 - y10;
 		B = x10 - x20;
 		C = x20 * y10 - x10 * y20;
@@ -497,9 +424,6 @@ public:
 	double x, y, r;
 	Cycle(double x, double y, double r)
 	{
-		if (r == 0) {
-			throw(CircleillegalException());
-		}
 		this->x = x;
 		this->y = y;
 		this->r = r;
@@ -877,9 +801,6 @@ int main(int argc,char*argv[])
 	for (int i = 0; i < n; i++) {
 		type = in.get();
 		while (isspace(type)) {
-			if (type == '\n') {
-				hangshu++;
-			}
 			type = in.get();
 		}
 		if (in.eof()) {
@@ -981,11 +902,9 @@ int main(int argc,char*argv[])
 					}
 				}
 				else {
-					if (!samepoint.empty()) {
-						pair<double, double> temp1 = samepoint.at(0);
-						Array_dot.insert(temp1);
-						samepoint.clear();
-					}
+					pair<double, double> temp1 = samepoint.at(0);
+					Array_dot.insert(temp1);
+					samepoint.clear();
 				}
 			}
 			for (unsigned int j = 0; j < Array_segment.size(); j++)
@@ -1020,11 +939,9 @@ int main(int argc,char*argv[])
 					}
 				}
 				else {
-					if (!samepoint.empty()) {
-						pair<double, double> temp1 = samepoint.at(0);
-						Array_dot.insert(temp1);
-						samepoint.clear();
-					}
+					pair<double, double> temp1 = samepoint.at(0);
+					Array_dot.insert(temp1);
+					samepoint.clear();
 				}
 			}
 			for (unsigned int j = 0; j < Array_cycle.size(); j++) {
@@ -1095,12 +1012,9 @@ int main(int argc,char*argv[])
 					}
 				}
 				else {
-					if (!samepoint.empty()) {
-						pair<double, double> temp1 = samepoint.at(0);
-						Array_dot.insert(temp1);
-						samepoint.clear();
-					}
-					
+					pair<double, double> temp1 = samepoint.at(0);
+					Array_dot.insert(temp1);
+					samepoint.clear();
 				}
 			}
 			
@@ -1136,11 +1050,9 @@ int main(int argc,char*argv[])
 					}
 				}
 				else {
-					if (!samepoint.empty()) {
-						pair<double, double> temp1 = samepoint.at(0);
-						Array_dot.insert(temp1);
-						samepoint.clear();
-					}
+					pair<double, double> temp1 = samepoint.at(0);
+					Array_dot.insert(temp1);
+					samepoint.clear();
 				}
 			}
 			
@@ -1221,11 +1133,7 @@ int main(int argc,char*argv[])
 	
 	char tempchar;
 	tempchar = in.get();
-	while (isspace(tempchar)) { 
-		if (tempchar == '\n') {
-			hangshu++;
-		}
-		tempchar = in.get();; }
+	while (isspace(tempchar)) { tempchar = in.get();; }
 	if (!in.eof()) {
 		throw EndException();
 	}
@@ -1233,29 +1141,24 @@ int main(int argc,char*argv[])
 	}
 	catch(OperatorException& e)
 	{
-		cout << e.what()<<"at "<<hangshu << endl;
+		cout << e.what() << endl;
 	}
 	catch (NumberException& e) {
-		cout << e.what() << "at " << hangshu << endl;
+		cout << e.what() << endl;
 	}
 	catch (EndException& e) {
-		cout << e.what() << "at " << hangshu << endl;
+		cout << e.what() << endl;
 	}
 	catch (DefectException& e) {
-		cout << e.what() << "at " << hangshu << endl;
+		cout << e.what() << endl;
 	}
 	catch (LinesameException& e) {
-		cout << e.what() << "at " << hangshu << endl;
+		cout << e.what() << endl;
 	}
 	catch (CirclesameException& e) {
-		cout << e.what() << "at " << hangshu << endl;
+		cout << e.what() << endl;
 	}
-	catch (LineillegalException& e) {
-		cout << e.what() << "at " << hangshu << endl;
-	}
-	catch (CircleillegalException& e) {
-		cout << e.what() << "at " << hangshu << endl;
-	}
+	
 	
 }
 void test(string str1) {
@@ -1290,9 +1193,6 @@ void test(string str1) {
 	for (int i = 0; i < n; i++) {
 		type = in.get();
 		while (isspace(type)) {
-			if (type == '\n') {
-				hangshu++;
-			}
 			type = in.get();
 		}
 		if (in.eof()) {
@@ -1626,11 +1526,7 @@ void test(string str1) {
 
 	char tempchar;
 	tempchar = in.get();
-	while (isspace(tempchar)) { 
-		if (tempchar == '\n') {
-			hangshu++;
-		}
-		tempchar = in.get();; }
+	while (isspace(tempchar)) { tempchar = in.get();; }
 	if (!in.eof()) {
 		throw EndException();
 	}

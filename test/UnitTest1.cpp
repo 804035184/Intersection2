@@ -197,16 +197,6 @@ namespace UnitTest1
 				Assert::AreEqual("Circlesame Exception", e.what());
 			}*/
 		}
-		TEST_METHOD(TestLineillegalException) {
-			auto func = [] {test("input8.txt"); };
-			Assert::ExpectException<LineillegalException>(func);
-			
-		}
-		TEST_METHOD(TestCircleillegalException) {
-			auto func = [] {test("input9.txt"); };
-			Assert::ExpectException<CircleillegalException>(func);
-			
-		}
 		
 	};
 	
