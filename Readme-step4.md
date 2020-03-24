@@ -106,7 +106,11 @@ L -1 4 4 -1
 
 ## 增加了ui界面
 
-直接运行intersect.exe即了进入ui界面，同时该exe还支持之前作业的命令行操作
+直接运行intersect.exe即可进入ui界面。
+
+同时该exe还支持之前作业的命令行操作，使用intersect.exe -i input.txt -o output.txt 即可求解交点并在文件中输出交点个数以及错误信息（也会弹出UI界面）。
+
+若想像之前一样不使用ui，请使用文件intersect_noui.exe
 
 图形化界面实现了绘制直线以及展示交点的功能，支持文件导入以及单独输入
 
